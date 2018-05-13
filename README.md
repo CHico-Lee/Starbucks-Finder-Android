@@ -1,5 +1,5 @@
 
-Starbucks Finder
+Starbucks Finder - Android
 ====================================
 
 Code challenge to list all nearby Starbucks.
@@ -65,7 +65,8 @@ Paste API keys into google_maps_api.xml
 
 Screenshot
 --------------
-![Alt text](docs/starbucks_list.jpg?raw=true "Starbucks List")
+![Alt text](docs/starbucks_list.jpg?raw=true "Starbucks on List")
+![Alt text](docs/starbucks_map.jpg?raw=true "Starbucks on Map")
 
 
 
