@@ -19,8 +19,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.LinearLayout
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResolvableApiException
@@ -41,8 +40,7 @@ import kotlin.system.exitProcess
 class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Toolbar.OnMenuItemClickListener {
 
     private lateinit var toolbar: Toolbar
-    private lateinit var progressbarCyclic: ProgressBar
-    private lateinit var textViewLoading: TextView
+    private lateinit var loadingLayout: LinearLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -52,6 +50,7 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
     private var lastLocation: Location? = null
     private var googleApiClient: GoogleApiClient? = null
     private val nearbyStarbucks = NearbyStarbucks.instance
+    private var searchLatLng : LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,8 +84,7 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
         toolbar.inflateMenu(R.menu.main)
         toolbar.setOnMenuItemClickListener(this)
 
-        progressbarCyclic = rootView.findViewById(R.id.progressbar_cyclic)
-        textViewLoading = rootView.findViewById(R.id.textView_loading)
+        loadingLayout = rootView.findViewById(R.id.layout_loading)
         recyclerView = rootView.findViewById(R.id.recyclerView)
         layoutManager = LinearLayoutManager(activity)
         with(recyclerView) {
@@ -103,7 +101,7 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
                 startLocationUpdates()
             }
             if (nearbyStarbucks.storeList.isEmpty())
-                refreshStoreList(null);
+                refreshStoreList(searchLatLng);
             else
                 ShowCafeResults()
 
@@ -121,8 +119,10 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
             }
             if (requestCode == ListFragment.PLACE_PICKER_REQUEST) {
                 if (resultCode == Activity.RESULT_OK) {
+                    nearbyStarbucks.storeList.clear()
                     val place = PlacePicker.getPlace(context, data)
-                    refreshStoreList(place.latLng)
+                    searchLatLng = place.latLng
+                    refreshStoreList(searchLatLng)
                 }
             }
 
@@ -206,8 +206,7 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
 
     private fun refreshStoreList(newLocation: LatLng?) {
         recyclerView.visibility = GONE
-        progressbarCyclic.visibility = VISIBLE
-        textViewLoading.visibility = VISIBLE
+        loadingLayout.visibility = VISIBLE
 
         thread() {
             try {
@@ -269,8 +268,9 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
         this@ListFragment.activity?.runOnUiThread(java.lang.Runnable {
             recyclerView.adapter = ListItemAdapter(nearbyStarbucks.storeList, this)
             recyclerView.visibility = VISIBLE
-            progressbarCyclic.visibility = GONE
-            textViewLoading.visibility = GONE
+            loadingLayout.visibility = GONE
+            //progressbarCyclic.visibility = GONE
+            //textViewLoading.visibility = GONE
         })
 
     }
@@ -299,11 +299,11 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
         dialog.show()
     }
 
-    fun AlertDialog.Builder.positiveButton(text: String = "Okay", handleClick: (which: Int) -> Unit = {}) {
+    private fun AlertDialog.Builder.positiveButton(text: String = "Okay", handleClick: (which: Int) -> Unit = {}) {
         this.setPositiveButton(text, { _, which-> handleClick(which) })
     }
 
-    fun AlertDialog.Builder.negativeButton(text: String = "Cancel", handleClick: (which: Int) -> Unit = {}) {
+    private fun AlertDialog.Builder.negativeButton(text: String = "Cancel", handleClick: (which: Int) -> Unit = {}) {
         this.setNegativeButton(text, { _, which-> handleClick(which) })
     }
 

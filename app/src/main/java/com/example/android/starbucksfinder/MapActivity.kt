@@ -24,7 +24,7 @@ class MapActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_basic_map_demo)
+        setContentView(R.layout.activity_basic_map)
         setSupportActionBar(findViewById(R.id.my_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val mapFragment: SupportMapFragment? =
