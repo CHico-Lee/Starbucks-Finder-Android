@@ -6,24 +6,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/progressbar_cyclic"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_loading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="45dp"
-        android:maxHeight="75dp"
-        android:maxWidth="75dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:visibility="visible" />
-    <TextView
-        android:id="@+id/textView_loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/progress_loading"
-        android:textAlignment="center"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="visible"/>
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+        <ProgressBar
+            android:id="@+id/progressbar_cyclic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="50dp"
+            android:maxWidth="50dp"
+            android:minHeight="50dp"
+            android:minWidth="50dp"
+            android:visibility="visible" />
+        <TextView
+            android:id="@+id/textView_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/progress_loading"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:visibility="visible"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
