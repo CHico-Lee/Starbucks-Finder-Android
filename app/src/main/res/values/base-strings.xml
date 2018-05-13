@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<resources>
+    <string name="app_name">Starbucks Finder</string>
+    <string name="intro_message">
+        <![CDATA[
+        
+            App show a list of the local Starbucks, using Google or any other API.
+            App should allow user to click on a Starbucks and load a map.
+            App should allow returning back to the Starbucks list from the map.
+            App should use native (not 3rd party) networking functionality written in Kotlin.
+
+        
+        ]]>
+    </string>
+</resources>

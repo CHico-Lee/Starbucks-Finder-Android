@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="element_text">Element</string>
+    <string name="grid_layout_manager">Grid Layout Manager</string>
+    <string name="linear_layout_manager">Linear Layout Manager</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="progress_loading">Loading…</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="menu_edit_location">Edit Location</string>
+
+</resources>
