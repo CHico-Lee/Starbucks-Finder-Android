@@ -2,7 +2,7 @@
 Starbucks Finder
 ====================================
 
-Code challenge to list all nearby Starbucks on the list.
+Code challenge to list all nearby Starbucks.
 Clicking on the list will open the Starbucks location on a map.
 The app will search nearby Starbucks with GPS position by default, the user can search other location
 by clicking the top-right icon.
