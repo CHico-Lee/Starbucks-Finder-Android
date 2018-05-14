@@ -61,6 +61,8 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
+                if (nearbyStarbucks.storeList.isEmpty())
+                    refreshStoreList(searchLatLng);
             }
 
         }
@@ -125,7 +127,14 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
                     refreshStoreList(searchLatLng)
                 }
             }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == ListFragment.LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates()
+            }
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -269,8 +278,6 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
             recyclerView.adapter = ListItemAdapter(nearbyStarbucks.storeList, this)
             recyclerView.visibility = VISIBLE
             loadingLayout.visibility = GONE
-            //progressbarCyclic.visibility = GONE
-            //textViewLoading.visibility = GONE
         })
 
     }

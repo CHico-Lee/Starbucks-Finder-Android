@@ -3,6 +3,7 @@ package com.example.android.starbucksfinder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 /**
@@ -16,7 +17,7 @@ import android.view.MenuItem
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
  */
-class MainActivity : SampleActivityBase() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,5 +59,16 @@ class MainActivity : SampleActivityBase() {
                 android.util.Log.i(TAG, "onActivityResult Main REQUEST_CHECK_SETTINGS")
             }
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val fragments = supportFragmentManager.fragments
+        if (fragments != null) {
+            for (fragment in fragments) {
+                fragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            }
+        }
+
     }
 }
