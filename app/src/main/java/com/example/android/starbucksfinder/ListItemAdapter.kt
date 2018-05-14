@@ -18,11 +18,13 @@ import android.widget.TextView
  */
 class ListItemAdapter(val dataSet: ArrayList<Store>, private var mCallBacks: ListFragment) :
         RecyclerView.Adapter<ListItemAdapter.ViewHolder>() {
+    /*
     init {
         if (dataSet.size==0){
             dataSet.add(Store("No result", "Please try another location", 0.0, 0.0, false))
         }
     }
+    */
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)

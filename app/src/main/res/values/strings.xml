@@ -8,6 +8,6 @@
     <string name="progress_loading">Loading…</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
-    <string name="menu_edit_location">Edit Location</string>
+    <string name="menu_edit_location">Change Location</string>
 
 </resources>

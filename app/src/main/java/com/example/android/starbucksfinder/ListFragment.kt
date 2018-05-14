@@ -46,11 +46,12 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
+    private var noResultDialog: AlertDialog? = null
     private var locationUpdateState = false
     private var lastLocation: Location? = null
     private var googleApiClient: GoogleApiClient? = null
     private val nearbyStarbucks = NearbyStarbucks.instance
-    private var searchLatLng : LatLng? = null
+    private var searchLatLng: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,9 +103,7 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
             if (!locationUpdateState) {
                 startLocationUpdates()
             }
-            if (nearbyStarbucks.storeList.isEmpty())
-                refreshStoreList(searchLatLng);
-            else
+            if (!nearbyStarbucks.storeList.isEmpty())
                 ShowCafeResults()
 
     }
@@ -141,14 +140,11 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
         val id = item!!.itemId
 
         when (id) {
-
             R.id.menu_edit_location -> {
                 val builder = PlacePicker.IntentBuilder()
                 startActivityForResult(builder.build(activity!!), PLACE_PICKER_REQUEST);
                 return true
             }
-
-
             else -> return false
         }
     }
@@ -278,6 +274,14 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
             recyclerView.adapter = ListItemAdapter(nearbyStarbucks.storeList, this)
             recyclerView.visibility = VISIBLE
             loadingLayout.visibility = GONE
+
+            if (nearbyStarbucks.storeList.isEmpty() ) {
+                if (noResultDialog == null || noResultDialog != null && !noResultDialog!!.isShowing)
+                    showNoResultDialog()
+            }
+            else {
+                noResultDialog?.hide()
+            }
         })
 
     }
@@ -298,12 +302,29 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
 
     }
 
-    private fun showAlertDialog(dialogBuilder: AlertDialog.Builder.() -> Unit) {
+    private fun showNoResultDialog() {
+        this@ListFragment.activity?.runOnUiThread(java.lang.Runnable {
+            noResultDialog = showAlertDialog {
+                setTitle("No Starbucks nearby")
+                setMessage("Please try another location.")
+                positiveButton("Change location") {
+                    val builder = PlacePicker.IntentBuilder()
+                    startActivityForResult(builder.build(activity!!), PLACE_PICKER_REQUEST);
+                }
+                negativeButton {
+                }
+            }
+        })
+
+    }
+
+    private fun showAlertDialog(dialogBuilder: AlertDialog.Builder.() -> Unit):AlertDialog {
         val builder = AlertDialog.Builder(context)
         builder.dialogBuilder()
         val dialog = builder.create()
 
         dialog.show()
+        return dialog
     }
 
     private fun AlertDialog.Builder.positiveButton(text: String = "Okay", handleClick: (which: Int) -> Unit = {}) {
