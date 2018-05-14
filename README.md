@@ -61,7 +61,19 @@ Get API Keys from Google API Console with SHA-1 certificate fingerprint.
 https://console.developers.google.com/
 - API Key for "Places API Web Service"
 - API Key for "Maps Android API" and "Places API for Android"
-Paste API keys into google_maps_api.xml
+
+Paste API keys into **app\src\debug\res\values\google_maps_api.xml**
+```
+<!--google_maps_api.xml-->
+<resources>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        Android Maps and Places API KEY HERE
+    </string>
+    <string name="google_places_web_key" templateMergeStrategy="preserve" translatable="false">
+        Places Web Service API KEY HERE
+    </string>
+</resources>
+```
 
 Screenshot
 --------------
