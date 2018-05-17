@@ -1,5 +1,6 @@
 package com.example.android.starbucksfinder
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,16 +17,8 @@ import android.widget.TextView
  *
  * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
  */
-class ListItemAdapter(val dataSet: ArrayList<Store>, private var mCallBacks: ListFragment) :
+class ListItemAdapter(val dataSet: ArrayList<Store>, val mCallBacks: AdapterCallBack, val context: Context) :
         RecyclerView.Adapter<ListItemAdapter.ViewHolder>() {
-    /*
-    init {
-        if (dataSet.size==0){
-            dataSet.add(Store("No result", "Please try another location", 0.0, 0.0, false))
-        }
-    }
-    */
-
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
@@ -59,7 +52,10 @@ class ListItemAdapter(val dataSet: ArrayList<Store>, private var mCallBacks: Lis
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         viewHolder.textViewAddress.text = "${dataSet[position].name}\n${dataSet[position].vicinity}"
-        val openClosed = if (dataSet[position].openNow) "open" else "closed"
+        var openClosed = context.getString(R.string.unknown)
+
+        dataSet[position].openNow?.let { isopen ->
+            openClosed = if (isopen) context.getString(R.string.open) else context.getString(R.string.closed)}
         viewHolder.textViewOpen.text = "$openClosed"
 
     }

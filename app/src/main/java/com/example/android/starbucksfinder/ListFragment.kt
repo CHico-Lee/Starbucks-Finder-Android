@@ -37,7 +37,7 @@ import kotlin.system.exitProcess
  * Created by leech on 5/7/2018.
  */
 
-class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Toolbar.OnMenuItemClickListener {
+class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Toolbar.OnMenuItemClickListener, AdapterCallBack {
 
     private lateinit var toolbar: Toolbar
     private lateinit var loadingLayout: LinearLayout
@@ -198,11 +198,9 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
                 }
             }
         }
-
-
     }
 
-    fun listItemClicked(pos: Int) {
+    override fun listItemClicked(pos: Int) {
         var intent = Intent(context, MapActivity::class.java)
         intent.putExtra("position", pos)
         startActivity(intent)
@@ -252,15 +250,18 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
             try {
                 val resultObj = resultsArray.getJSONObject(i)
                 val name = resultObj.getString("name")
-                if (name != "Starbucks")
-                    continue
                 val vicinity = resultObj.getString("vicinity")
                 val geometryObj = resultObj.getJSONObject("geometry")
                 val locationObj = geometryObj.getJSONObject("location")
                 val lat = locationObj.getDouble("lat")
                 val lng = locationObj.getDouble("lng")
-                val openingObj = resultObj.getJSONObject("opening_hours")
-                val openNow = (openingObj.getString("open_now") == "true")
+                var openNow : Boolean? = null
+                if (resultObj.has("opening_hours")){
+                    val openingObj = resultObj.getJSONObject("opening_hours")
+                    openingObj.getBoolean("open_now")?.let { isOpen ->
+                        openNow = isOpen
+                    }
+                }
                 val newStore = Store(name, vicinity, lat, lng, openNow)
                 nearbyStarbucks.storeList.add(newStore)
             } catch (e: JSONException) {
@@ -271,7 +272,7 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
 
     private fun ShowCafeResults() {
         this@ListFragment.activity?.runOnUiThread(java.lang.Runnable {
-            recyclerView.adapter = ListItemAdapter(nearbyStarbucks.storeList, this)
+            recyclerView.adapter = ListItemAdapter(nearbyStarbucks.storeList, this, context!!)
             recyclerView.visibility = VISIBLE
             loadingLayout.visibility = GONE
 
@@ -289,9 +290,9 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
     private fun showErrorDialog() {
         this@ListFragment.activity?.runOnUiThread(java.lang.Runnable {
             showAlertDialog {
-                setTitle("No internet connection")
-                setMessage("Please connection to internet.")
-                positiveButton("Retry") {
+                setTitle(getString(R.string.no_internet_title))
+                setMessage(getString(R.string.no_internet_message))
+                positiveButton(getString(R.string.button_retry)) {
                     refreshStoreList(null)
                 }
                 negativeButton {
@@ -305,9 +306,9 @@ class ListFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener, Too
     private fun showNoResultDialog() {
         this@ListFragment.activity?.runOnUiThread(java.lang.Runnable {
             noResultDialog = showAlertDialog {
-                setTitle("No Starbucks nearby")
-                setMessage("Please try another location.")
-                positiveButton("Change location") {
+                setTitle(getString(R.string.no_nearby_title))
+                setMessage(getString(R.string.no_nearby_message))
+                positiveButton(getString(R.string.change_location)) {
                     val builder = PlacePicker.IntentBuilder()
                     startActivityForResult(builder.build(activity!!), PLACE_PICKER_REQUEST);
                 }

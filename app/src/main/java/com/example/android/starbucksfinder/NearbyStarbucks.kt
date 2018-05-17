@@ -5,7 +5,10 @@ package com.example.android.starbucksfinder
  */
 
 public class NearbyStarbucks private constructor() {
+    var storeList: ArrayList<Store>
+
     init {
+        storeList = arrayListOf<Store>()
     }
 
     private object Holder {
@@ -16,5 +19,5 @@ public class NearbyStarbucks private constructor() {
         val instance: NearbyStarbucks by lazy { Holder.INSTANCE }
     }
 
-    var storeList = arrayListOf<Store>()
+
 }
