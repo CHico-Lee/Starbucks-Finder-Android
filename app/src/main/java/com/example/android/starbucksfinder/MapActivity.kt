@@ -21,6 +21,7 @@ class MapActivity :
     var location = LatLng(42.359584, -71.059844)
     val ZOOM_LEVEL = 15f
     var title: String = ""
+    var vicinity : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class MapActivity :
         val nearbyStarbucks = NearbyStarbucks.instance
         location = LatLng(nearbyStarbucks.storeList[pos].lat, nearbyStarbucks.storeList[pos].lng)
         title = nearbyStarbucks.storeList[pos].name
+        vicinity = nearbyStarbucks.storeList[pos].vicinity
     }
 
     /**
@@ -45,7 +47,7 @@ class MapActivity :
         googleMap ?: return
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL))
-            addMarker(MarkerOptions().position(location).title(title))
+            addMarker(MarkerOptions().position(location).title(title).snippet(vicinity))
         }
     }
 }
