@@ -1,4 +1,4 @@
-<img src="app/src/main/res/mipmap-xhdpi/ic_launcher.png" alt="Google Inc. logo" title="Google" align="right" height="96" width="96"/>
+<img src="app/src/main/res/mipmap-xhdpi/ic_launcher.png" alt="Starbucks Finder icon" title="Starbucks Finder" align="right" height="96" width="96"/>
 
 Starbucks Finder - Android
 ====================================
