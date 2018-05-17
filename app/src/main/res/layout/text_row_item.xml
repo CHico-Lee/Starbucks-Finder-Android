@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,6 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
+        android:alpha=".54"
         android:paddingRight="8dp"
         android:scaleType="center"
         app:srcCompat="@drawable/ic_free_breakfast_black_24dp" />
@@ -23,13 +25,14 @@
 
     <TextView
         android:id="@+id/textView_address"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
         android:layout_toEndOf="@+id/imageview_itemlist"
         android:layout_toRightOf="@+id/imageview_itemlist"
         android:layout_toLeftOf="@+id/textView_open"
+        android:layout_toStartOf="@+id/textView_open"
+        android:maxLines="3"
         android:text="@string/element_text" />
 
     <TextView
@@ -39,5 +42,5 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:layout_alignParentRight="true"
-        android:text="@string/open" />
+        android:text="@string/closed" />
 </RelativeLayout >
