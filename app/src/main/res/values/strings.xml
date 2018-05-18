@@ -2,8 +2,6 @@
 
 <resources>
     <string name="element_text">Element</string>
-    <string name="grid_layout_manager">Grid Layout Manager</string>
-    <string name="linear_layout_manager">Linear Layout Manager</string>
     <string name="title_activity_maps">Map</string>
     <string name="progress_loading">Loading…</string>
     <string name="unknown">Unknown</string>
@@ -11,8 +9,8 @@
     <string name="closed">Closed</string>
     <string name="change_location">Change Location</string>
 
-    <string name="no_internet_title">No internet connection</string>
-    <string name="no_internet_message">Please connection to internet.</string>
+    <string name="no_internet_title">Could not load data</string>
+    <string name="no_internet_message">Please connect to the Internet.</string>
     <string name="button_retry">Retry</string>
     <string name="no_nearby_title">No Starbucks nearby</string>
     <string name="no_nearby_message">Please try another location.</string>
