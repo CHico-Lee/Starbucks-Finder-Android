@@ -7,6 +7,8 @@ An Android app to list all nearby Starbucks.
 Click on the list will open the Starbucks location on a map.
 The app will search nearby Starbucks with current GPS position by default, click the top-right icon to change the search location.
 
+See also: [iOS version](https://github.com/CHico-Lee/Starbucks-Finder-iOS)
+
 Screenshot
 --------------
 ![Alt text](docs/starbucks_list.jpg?raw=true "Starbucks on List")
@@ -17,11 +19,11 @@ Implementation
 ------------
 
 - Get the last GPS location for Lat and long using Google Play services location APIs (LocationServices).
-- using URL Class to download JSON data from Places API Web Service.
-- Using JSONObject Class to parse JSON data.
-- List nearby Starbucks using RecyclerView with a LinearLayoutManager.
-- Using Maps Android API to plot the location on a map.
-- Using Places API for Android to get location position search by text.
+- Using *URL* Class to download JSON data from *Places API for Web*.
+- Using *JSONObject* Class to parse JSON data.
+- List nearby Starbucks using *RecyclerView* with a *LinearLayoutManager*.
+- Using *Maps SDK for Android* to plot the location on a map.
+- Using *Places API for Android* to get location position search by text.
 
 
 Requirements
@@ -41,9 +43,9 @@ Pre-requisites
 
 - Android SDK 27+
 - Android Gradle Plugin 3.0
-- Maps Android API
-- Places API for Android
-- Places API Web Service
+- [Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/intro)
+- [Places API for Android](https://developers.google.com/places/android-sdk/intro)
+- [Places API for Web](https://developers.google.com/places/web-service/intro)
 
 
 Required Permission
@@ -54,18 +56,18 @@ Required Permission
 
 Steps to run
 --------------
-Simply install and run **Starbucks_Finder_v1.0.apk**
+Simply install and run `Starbucks_Finder_v1.0.apk`
 
 --or--
 
-To run on Android Studio:
-Get API Keys from Google API Console with SHA-1 certificate fingerprint.
-https://console.developers.google.com/
-- API Key for "Places API Web Service"
-- API Key for "Maps Android API" and "Places API for Android"
+To run on *Android Studio*:
 
-Paste API keys into **app\src\debug\res\values\google_maps_api.xml**
-```
+Get API Keys from [Google API Console](https://console.developers.google.com/) with SHA-1 certificate fingerprint.
+- API Key for **Places API for Web**
+- API Key for **Maps SDK for Android** and **Places API for Android**
+
+Paste API keys into `app\src\debug\res\values\google_maps_api.xml`
+```xml
 <!--google_maps_api.xml-->
 <resources>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
