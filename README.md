@@ -79,5 +79,8 @@ Paste API keys into `app\src\debug\res\values\google_maps_api.xml`
 </resources>
 ```
 
+License
+--------------
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 
